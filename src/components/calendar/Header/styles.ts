@@ -3,10 +3,12 @@ import styled from 'styled-components';
 export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.background.secondary};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 0.5rem 0.5rem 0;
 `;
 
 export const HeaderTop = styled.div`
@@ -32,7 +34,8 @@ export const ViewSelectorContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0.75rem;
+  position: relative;
 `;
 
 export const ScaleSelectorContainer = styled.div`
@@ -58,41 +61,62 @@ export const ScaleSelectorContainer = styled.div`
 export const WeekHeaderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
+  gap: 8px;
+  margin-top: 0.5rem;
 `;
 
 export const DayHeaderItem = styled.div<{ isToday?: boolean }>`
-  padding: 0.5rem;
+  padding: 0.75rem 0.5rem;
   text-align: center;
-  border-right: 1px solid ${({ theme }) => theme.colors.border.light};
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   
   ${({ isToday, theme }) => isToday && `
-    background-color: ${theme.colors.accent.primaryLight};
+    background-color: ${theme.colors.primary}20;
     font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
   `}
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
   .day-name {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: ${({ theme }) => theme.colors.text.secondary};
+    margin-bottom: 4px;
+    font-weight: 500;
   }
 
   .day-number {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-top: 0.25rem;
-    color: ${({ theme }) => theme.colors.text.primary};
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 6px 0;
+    color: ${({ theme, isToday }) => isToday ? theme.colors.primary : theme.colors.text.primary};
   }
 
   .add-event-btn {
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     background: transparent;
     border: none;
-    color: ${({ theme }) => theme.colors.accent.primary};
+    color: ${({ theme }) => theme.colors.primary};
     cursor: pointer;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    padding: 4px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
     
     &:hover {
-      color: ${({ theme }) => theme.colors.accent.hover};
+      background-color: ${({ theme }) => `${theme.colors.primary}15`};
+      transform: scale(1.1);
     }
   }
 `;

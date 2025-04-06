@@ -6,47 +6,67 @@ export const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.7)'};
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(8px);
+  padding: 0 1rem;
+  isolation: isolate;
+  contain: layout;
+  will-change: transform;
+  -webkit-transform: translate3d(0, 0, 0);
 `;
 
 export const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: 16px;
+  box-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 12px 40px rgba(0, 0, 0, 0.4)' : '0 12px 40px rgba(0, 0, 0, 0.25)'};
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   overflow: hidden;
-  animation: modalFadeIn 0.3s ease-out;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  isolation: isolate;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}40`};
+  opacity: 1 !important;
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: content;
   
   @keyframes modalFadeIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: scale(0.95) translateY(10px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1) translateY(0);
     }
   }
 `;
 
 export const ModalHeader = styled.div`
-  padding: 1.25rem 1.5rem;
+  padding: 1.5rem 1.75rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.primary};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  position: relative;
+  z-index: 10;
+  contain: content;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1 !important;
   
   h2 {
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.375rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.colors.text.primary};
+    letter-spacing: -0.01em;
   }
   
   button {
@@ -58,48 +78,100 @@ export const ModalHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
     
     &:hover {
       color: ${({ theme }) => theme.colors.text.primary};
+      background-color: ${({ theme }) => theme.colors.background.secondary};
     }
   }
 `;
 
 export const ModalBody = styled.div`
-  padding: 1.5rem;
+  padding: 1.75rem;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  max-height: calc(85vh - 180px);
+  overflow-y: auto;
+  position: relative;
+  z-index: 5;
+  contain: content;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1 !important;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.border.primary};
+    border-radius: 6px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+`;
+
+export const ErrorMessage = styled.span`
+  color: #f5222d;
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+  display: block;
+  font-weight: 500;
 `;
 
 export const FormGroup = styled.div`
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
+  position: relative;
   
   label {
-    display: block;
-    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.625rem;
     font-size: 0.875rem;
-    font-weight: 500;
-    color: ${({ theme }) => theme.colors.text.secondary};
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.text.primary};
+    
+    svg {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
   
   input, textarea, select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem 1rem;
     border: 1px solid ${({ theme }) => theme.colors.border.primary};
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: ${({ theme }) => theme.colors.background.primary};
     color: ${({ theme }) => theme.colors.text.primary};
     font-size: 1rem;
+    transition: all 0.2s ease;
     
     &:focus {
       outline: none;
-      border-color: ${({ theme }) => theme.colors.accent.primary};
-      box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.accent.primaryLight};
+      border-color: ${({ theme }) => theme.colors.primary};
+      box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.1);
+    }
+    
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.text.secondary};
+      opacity: 0.7;
     }
   }
   
   textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
+    line-height: 1.5;
   }
 `;
 
@@ -119,45 +191,71 @@ export const ColorOptions = styled.div`
 `;
 
 export const ColorOption = styled.button<{ $color: string; $selected: boolean }>`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: ${({ $color }) => $color};
   border: 2px solid ${({ $selected, $color, theme }) => 
-    $selected ? theme.colors.text.primary : $color};
+    $selected ? theme.colors.text.primary : 'transparent'};
   cursor: pointer;
   padding: 0;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
+  position: relative;
   
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    box-shadow: ${({ $selected }) => $selected ? '0 0 0 2px white inset' : 'none'};
+    opacity: ${({ $selected }) => $selected ? 1 : 0};
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
   }
 `;
 
 export const ModalFooter = styled.div`
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.75rem;
   border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  position: relative;
+  z-index: 10;
+  contain: content;
+  -webkit-transform: translate3d(0, 0, 0);
+  opacity: 1 !important;
 `;
 
 export const ActionButtons = styled.div`
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
 `;
 
 export const DurationSelector = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   
   input {
-    width: 70px;
+    width: 80px;
   }
   
   span {
     color: ${({ theme }) => theme.colors.text.secondary};
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    font-weight: 500;
   }
 `;

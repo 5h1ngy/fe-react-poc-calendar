@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CalendarPageContainer, CalendarContent, LoadingContainer } from './styles';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { FiLoader } from 'react-icons/fi';
-import { selectCurrentDate, selectCurrentView, CalendarEvent } from '@/store/slices/calendarSlice';
+import { selectCurrentDate, selectCurrentView, CalendarEvent, setCurrentView } from '@/store/slices/calendarSlice';
 import { configureLocale } from '@/utils/datetime/dateUtils';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Componenti del calendario
 import CalendarHeader from '@/components/calendar/Header';
@@ -14,8 +15,15 @@ import WeekView from '@/components/calendar/WeekView';
 import MonthView from '@/components/calendar/MonthView';
 import EventModal from '@/components/calendar/EventModal';
 
-const CalendarPage: React.FC = () => {
+interface CalendarPageProps {
+  view?: 'day' | 'week' | 'month';
+}
+
+const CalendarPage: React.FC<CalendarPageProps> = ({ view }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const currentDateStr = useSelector(selectCurrentDate);
   const currentView = useSelector(selectCurrentView);
   
@@ -24,11 +32,13 @@ const CalendarPage: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<moment.Moment | undefined>(undefined);
   
-  // Configura il locale di moment.js
+  // Configura il locale di moment.js 
   useEffect(() => {
     configureLocale();
     setIsLoading(false);
   }, []);
+  
+  // Non aggiorniamo più l'URL quando cambia la vista corrente
   
   const handleEventClick = (event: CalendarEvent) => {
     setSelectedEvent(event);

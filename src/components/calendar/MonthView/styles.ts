@@ -5,6 +5,11 @@ export const MonthViewContainer = styled.div`
   flex-direction: column;
   height: calc(100vh - 200px);
   min-height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: ${({ theme }) => theme.colors.background.secondary};
+  margin: 0.5rem;
 `;
 
 export const MonthGrid = styled.div`
@@ -13,7 +18,32 @@ export const MonthGrid = styled.div`
   grid-template-rows: repeat(6, 1fr);
   flex: 1;
   overflow: hidden;
-  border-top: 1px solid ${({ theme }) => theme.colors.border.primary};
+  border-top: 1px solid ${({ theme }) => `${theme.colors.border.primary}20`};
+  background: ${({ theme }) => theme.colors.background.secondary};
+`;
+
+export const DayHeader = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border-bottom: 1px solid ${({ theme }) => `${theme.colors.border.primary}30`};
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+`;
+
+export const DayHeaderItem = styled.div<{ isWeekend?: boolean }>`
+  padding: 12px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: ${({ isWeekend, theme }) => 
+    isWeekend ? theme.colors.text.secondary : theme.colors.text.primary
+  };
+  border-right: 1px solid ${({ theme }) => `${theme.colors.border.primary}20`};
+  
+  &:last-child {
+    border-right: none;
+  }
 `;
 
 export const DayCell = styled.div<{ 
@@ -22,88 +52,105 @@ export const DayCell = styled.div<{
   isWeekend?: boolean;
 }>`
   position: relative;
-  border-right: 1px solid ${({ theme }) => theme.colors.border.light};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
-  padding: 8px;
+  border-right: 0.5px solid ${({ theme }) => `${theme.colors.border.primary}15`};
+  border-bottom: 0.5px solid ${({ theme }) => `${theme.colors.border.primary}15`};
+  padding: 8px 10px;
   overflow: hidden;
   height: 100%;
+  transition: all 0.15s ease-in-out;
   background-color: ${({ isCurrentMonth, isToday, isWeekend, theme }) => {
-    if (isToday) return theme.colors.background.highlight;
-    if (!isCurrentMonth) return theme.colors.background.disabled;
-    if (isWeekend) return theme.colors.background.secondary;
+    if (isToday) return `${theme.colors.primary}15`;
+    if (!isCurrentMonth) return `${theme.colors.background.primary}80`;
+    if (isWeekend) return `${theme.colors.background.primary}90`;
     return theme.colors.background.primary;
   }};
   
   &:hover {
     background-color: ${({ theme, isCurrentMonth }) => 
-      isCurrentMonth ? theme.colors.background.hover : theme.colors.background.disabled};
+      isCurrentMonth ? `${theme.colors.primary}10` : `${theme.colors.background.primary}60`};
+    box-shadow: inset 0 0 0 1px ${({ theme }) => `${theme.colors.border.primary}25`};
+    transform: scale(0.98);
+  }
+  
+  &:last-child {
+    border-right: none;
   }
 `;
 
-export const DayHeader = styled.div<{ isCurrentMonth?: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
-`;
-
-export const DayNumber = styled.span<{ isToday?: boolean; isCurrentMonth?: boolean }>`
+export const DayNumber = styled.div<{ isToday?: boolean; isCurrentMonth?: boolean }>`
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  font-weight: ${({ isToday }) => isToday ? 'bold' : 'normal'};
-  background-color: ${({ isToday, theme }) => isToday ? theme.colors.accent.primary : 'transparent'};
+  font-size: 0.875rem;
+  font-weight: ${({ isToday }) => (isToday ? '600' : '400')};
   color: ${({ isToday, isCurrentMonth, theme }) => {
-    if (isToday) return theme.colors.text.inverted;
-    if (!isCurrentMonth) return theme.colors.text.muted;
+    if (isToday) return theme.colors.primary;
+    if (!isCurrentMonth) return theme.colors.text.disabled;
     return theme.colors.text.primary;
   }};
+  border-radius: 50%;
+  background-color: ${({ isToday, theme }) => 
+    isToday ? `${theme.colors.primary}20` : 'transparent'
+  };
+  margin-bottom: 4px;
 `;
 
 export const AddButton = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.colors.accent.primary};
+  color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  opacity: 0.7;
+  transition: all 0.2s ease;
   
   &:hover {
-    background-color: ${({ theme }) => theme.colors.accent.primaryLight};
+    background-color: ${({ theme }) => `${theme.colors.primary}15`};
+    transform: scale(1.1);
+    opacity: 1;
   }
 `;
 
 export const EventsList = styled.div`
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
   gap: 2px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 `;
 
-export const EventItem = styled.div<{ $color: string }>`
-  background-color: ${({ $color }) => $color};
+export const EventItem = styled.div<{ $color?: string }>`
+  background-color: ${({ $color }) => $color || '#1890ff'};
   color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
   font-size: 0.75rem;
-  margin-bottom: 2px;
-  cursor: pointer;
-  overflow: hidden;
+  padding: 3px 8px;
+  margin-bottom: 3px;
+  border-radius: 4px;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: block;
+  width: 100%;
+  z-index: 1;
   
   &:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -119,6 +166,6 @@ export const MoreEventsButton = styled.button`
   text-align: center;
   
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.hover};
+    background-color: ${({ theme }) => `${theme.colors.primary}08`};
   }
 `;

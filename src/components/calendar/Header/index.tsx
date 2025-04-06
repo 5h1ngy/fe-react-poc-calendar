@@ -10,10 +10,11 @@ import {
   WeekHeaderContainer,
   DayHeaderItem
 } from './styles';
-import { FiChevronLeft, FiChevronRight, FiPlus } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiPlus, FiCalendar } from 'react-icons/fi';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/Button';
+import Button from '@/components/ui/Button';
+import ViewSlider from './ViewSlider';
 import { 
   selectCurrentDate, 
   selectCurrentView, 
@@ -129,24 +130,23 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({ onAddEvent }) => {
         <ControlsContainer>
           <Button 
             onClick={handlePrevious} 
-            variant="outline" 
+            variant="secondary" 
             size="small"
             aria-label={t('calendar.previous')}
-          >
-            <FiChevronLeft />
-          </Button>
+            icon={<FiChevronLeft />}
+          />
           <Button 
             onClick={handleNext} 
-            variant="outline" 
+            variant="secondary" 
             size="small"
             aria-label={t('calendar.next')}
-          >
-            <FiChevronRight />
-          </Button>
+            icon={<FiChevronRight />}
+          />
           <Button 
             onClick={handleTodayClick} 
-            variant="outline" 
+            variant="primary" 
             size="small"
+            icon={<FiCalendar />}
           >
             {t('calendar.today')}
           </Button>
@@ -173,34 +173,15 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({ onAddEvent }) => {
             onClick={() => onAddEvent(currentDate)} 
             variant="primary" 
             size="small"
+            icon={<FiPlus />}
           >
-            <FiPlus /> {t('calendar.addEvent')}
+            {t('calendar.addEvent')}
           </Button>
         </ControlsContainer>
       </HeaderTop>
       
       <ViewSelectorContainer>
-        <Button 
-          onClick={() => handleViewChange('month')} 
-          variant={currentView === 'month' ? 'primary' : 'outline'} 
-          size="small"
-        >
-          {t('calendar.month')}
-        </Button>
-        <Button 
-          onClick={() => handleViewChange('week')} 
-          variant={currentView === 'week' ? 'primary' : 'outline'} 
-          size="small"
-        >
-          {t('calendar.week')}
-        </Button>
-        <Button 
-          onClick={() => handleViewChange('day')} 
-          variant={currentView === 'day' ? 'primary' : 'outline'} 
-          size="small"
-        >
-          {t('calendar.day')}
-        </Button>
+        <ViewSlider currentView={currentView} />
       </ViewSelectorContainer>
       
       {renderWeekDaysHeader()}

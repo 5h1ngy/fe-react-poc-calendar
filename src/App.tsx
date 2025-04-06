@@ -9,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import MainLayout from '@/layouts/MainLayout';
 import CalendarPage from '@/pages/CalendarPage';
 import SettingsPage from '@/pages/SettingsPage';
+import AboutPage from '@/pages/AboutPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 
 // Import mock service only in development/mock mode
@@ -38,7 +39,11 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<CalendarPage />} />
+                <Route path="month" element={<CalendarPage view="month" />} />
+                <Route path="week" element={<CalendarPage view="week" />} />
+                <Route path="day" element={<CalendarPage view="day" />} />
                 <Route path="settings" element={<SettingsPage />} />
+                <Route path="about" element={<AboutPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>

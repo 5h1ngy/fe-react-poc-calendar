@@ -6,14 +6,25 @@ export interface Colors {
   // Base colors
   primary: string;
   secondary: string;
-  accent: string;
-  background: string;
-  backgroundHover: string;
   surface: string;
   error: string;
   warning: string;
   success: string;
   info: string;
+  backgroundHover: string;
+  
+  // Background variants
+  background: {
+    primary: string;
+    secondary: string;
+    highlight: string;
+  };
+  
+  // Accent colors
+  accent: {
+    primary: string;
+    secondary: string;
+  };
   
   // Gradients
   gradients: {
@@ -28,6 +39,7 @@ export interface Colors {
     disabled: string;
     hint: string;
     link: string;
+    muted: string;
   };
   
   // Border colors
@@ -35,6 +47,8 @@ export interface Colors {
     default: string;
     input: string;
     divider: string;
+    primary: string;
+    light: string;
   };
   
   // Component-specific colors

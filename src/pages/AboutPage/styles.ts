@@ -65,7 +65,7 @@ export const TechItem = styled.div`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.hover};
+    background-color: ${({ theme }) => theme.colors.background.secondary};
   }
 `;
 
@@ -113,4 +113,76 @@ export const MemberName = styled.h3`
 export const MemberRole = styled.p`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+`;
+
+export const MemberBio = styled.p`
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: 1.6;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  text-align: left;
+`;
+
+export const SocialLinks = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing.sm};
+  justify-content: center;
+  margin-top: ${({ theme }) => theme.spacing.sm};
+`;
+
+export const SocialLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  text-decoration: none;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary};
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const ProjectFeatures = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: ${({ theme }) => theme.spacing.md};
+`;
+
+export const FeatureItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background-color: ${({ theme }) => `${theme.colors.background.secondary}40`};
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+  
+  span {
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
 `;

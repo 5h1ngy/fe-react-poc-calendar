@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { 
   ModalOverlay, 
@@ -11,13 +11,17 @@ import {
   ActionButtons,
   ColorOptions,
   ColorOption,
-  DurationSelector
+  DurationSelector,
+  ErrorMessage
 } from './styles';
-import { Button } from '@/components/ui/Button';
-import { FiX, FiTrash2 } from 'react-icons/fi';
+import Button from '@/components/ui/Button';
+import { FiX, FiTrash2, FiCheck, FiCalendar, FiClock, FiTag } from 'react-icons/fi';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { addEvent, updateEvent, deleteEvent, CalendarEvent } from '@/store/slices/calendarSlice';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 interface EventModalProps {
   event?: CalendarEvent;
@@ -35,33 +39,58 @@ const EVENT_COLORS = [
   '#faad14', // yellow
 ];
 
+// Schema di validazione Zod per l'evento
+const eventSchema = z.object({
+  title: z.string().min(1, { message: 'Il titolo è obbligatorio' }),
+  description: z.string().optional(),
+  date: z.string().refine(val => moment(val, 'YYYY-MM-DD', true).isValid(), {
+    message: 'Data non valida',
+  }),
+  time: z.string().refine(val => moment(val, 'HH:mm', true).isValid(), {
+    message: 'Orario non valido',
+  }),
+  duration: z.number().min(5, { message: 'La durata minima è di 5 minuti' }),
+  color: z.string().refine(val => EVENT_COLORS.includes(val), {
+    message: 'Colore non valido',
+  }),
+});
+
+type EventFormValues = z.infer<typeof eventSchema>;
+
 const EventModal: React.FC<EventModalProps> = ({ event, initialDate, onClose }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   
-  const [title, setTitle] = useState(event?.title || '');
-  const [description, setDescription] = useState(event?.description || '');
-  const [date, setDate] = useState(
-    event ? moment(event.date).format('YYYY-MM-DD') : initialDate ? initialDate.format('YYYY-MM-DD') : moment().format('YYYY-MM-DD')
-  );
-  const [time, setTime] = useState(
-    event ? moment(event.date).format('HH:mm') : initialDate ? initialDate.format('HH:mm') : moment().format('HH:mm')
-  );
-  const [duration, setDuration] = useState(event?.duration || 30);
-  const [color, setColor] = useState(event?.color || EVENT_COLORS[0]);
+  // Configurazione di react-hook-form con zod
+  const { 
+    control, 
+    register, 
+    handleSubmit, 
+    setValue,
+    watch,
+    formState: { errors } 
+  } = useForm<EventFormValues>({
+    resolver: zodResolver(eventSchema),
+    defaultValues: {
+      title: event?.title || '',
+      description: event?.description || '',
+      date: event ? moment(event.date).format('YYYY-MM-DD') : initialDate ? initialDate.format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'),
+      time: event ? moment(event.date).format('HH:mm') : initialDate ? initialDate.format('HH:mm') : moment().format('HH:mm'),
+      duration: event?.duration || 30,
+      color: event?.color || EVENT_COLORS[0],
+    },
+  });
   
-  const handleSave = () => {
-    if (!title.trim()) {
-      alert(t('calendar.titleRequired'));
-      return;
-    }
-    
+  // Per aggiornare il colore osservato
+  const watchedColor = watch('color');
+  
+  const onSubmit = (data: EventFormValues) => {
     const eventData = {
-      title,
-      description,
-      date: moment(`${date} ${time}`).format(),
-      duration,
-      color,
+      title: data.title,
+      description: data.description || '',
+      date: moment(`${data.date} ${data.time}`).format(),
+      duration: data.duration,
+      color: data.color,
     };
     
     if (event) {
@@ -85,11 +114,8 @@ const EventModal: React.FC<EventModalProps> = ({ event, initialDate, onClose }) 
     }
   };
   
-  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value > 0) {
-      setDuration(value);
-    }
+  const handleColorSelect = (selectedColor: string) => {
+    setValue('color', selectedColor);
   };
   
   // Prevent body scrolling when modal is open
@@ -111,97 +137,129 @@ const EventModal: React.FC<EventModalProps> = ({ event, initialDate, onClose }) 
         </ModalHeader>
         
         <ModalBody>
-          <FormGroup>
-            <label htmlFor="event-title">{t('calendar.title')}</label>
-            <input 
-              id="event-title"
-              type="text" 
-              value={title} 
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder={t('calendar.titlePlaceholder')}
-              autoFocus
-            />
-          </FormGroup>
-          
-          <FormGroup>
-            <label htmlFor="event-description">{t('calendar.description')}</label>
-            <textarea 
-              id="event-description"
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder={t('calendar.descriptionPlaceholder')}
-            />
-          </FormGroup>
-          
-          <FormRow>
+          <form onSubmit={handleSubmit(onSubmit)} id="event-form">
             <FormGroup>
-              <label htmlFor="event-date">{t('calendar.date')}</label>
+              <label htmlFor="title">
+                <FiTag /> {t('calendar.title')}
+              </label>
               <input 
-                id="event-date"
-                type="date" 
-                value={date} 
-                onChange={(e) => setDate(e.target.value)}
+                id="title"
+                {...register('title')}
+                placeholder={t('calendar.titlePlaceholder')}
+                autoFocus
               />
+              {errors.title && (
+                <ErrorMessage>{errors.title.message}</ErrorMessage>
+              )}
             </FormGroup>
             
             <FormGroup>
-              <label htmlFor="event-time">{t('calendar.time')}</label>
-              <input 
-                id="event-time"
-                type="time" 
-                value={time} 
-                onChange={(e) => setTime(e.target.value)}
+              <label htmlFor="description">{t('calendar.description')}</label>
+              <textarea 
+                id="description"
+                {...register('description')}
+                placeholder={t('calendar.descriptionPlaceholder')}
               />
             </FormGroup>
-          </FormRow>
-          
-          <FormGroup>
-            <label htmlFor="event-duration">{t('calendar.duration')}</label>
-            <DurationSelector>
-              <input 
-                id="event-duration"
-                type="number" 
-                min="5" 
-                step="5" 
-                value={duration} 
-                onChange={handleDurationChange}
-              />
-              <span>{t('calendar.minutes')}</span>
-            </DurationSelector>
-          </FormGroup>
-          
-          <FormGroup>
-            <label>{t('calendar.color')}</label>
-            <ColorOptions>
-              {EVENT_COLORS.map((eventColor) => (
-                <ColorOption 
-                  key={eventColor}
-                  $color={eventColor}
-                  $selected={color === eventColor}
-                  onClick={() => setColor(eventColor)}
-                  aria-label={`${t('calendar.selectColor')} ${eventColor}`}
+            
+            <FormRow>
+              <FormGroup>
+                <label htmlFor="date">
+                  <FiCalendar /> {t('calendar.date')}
+                </label>
+                <input 
+                  id="date"
+                  type="date" 
+                  {...register('date')}
                 />
-              ))}
-            </ColorOptions>
-          </FormGroup>
+                {errors.date && (
+                  <ErrorMessage>{errors.date.message}</ErrorMessage>
+                )}
+              </FormGroup>
+              
+              <FormGroup>
+                <label htmlFor="time">
+                  <FiClock /> {t('calendar.time')}
+                </label>
+                <input 
+                  id="time"
+                  type="time" 
+                  {...register('time')}
+                />
+                {errors.time && (
+                  <ErrorMessage>{errors.time.message}</ErrorMessage>
+                )}
+              </FormGroup>
+            </FormRow>
+            
+            <FormGroup>
+              <label htmlFor="duration">{t('calendar.duration')}</label>
+              <DurationSelector>
+                <Controller 
+                  name="duration"
+                  control={control}
+                  render={({ field }) => (
+                    <input 
+                      id="duration"
+                      type="number" 
+                      min="5" 
+                      step="5"
+                      {...field}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value, 10);
+                        if (!isNaN(value) && value > 0) {
+                          field.onChange(value);
+                        }
+                      }}
+                    />
+                  )}
+                />
+                <span>{t('calendar.minutes')}</span>
+              </DurationSelector>
+              {errors.duration && (
+                <ErrorMessage>{errors.duration.message}</ErrorMessage>
+              )}
+            </FormGroup>
+            
+            <FormGroup>
+              <label>{t('calendar.color')}</label>
+              <ColorOptions>
+                {EVENT_COLORS.map((eventColor) => (
+                  <ColorOption 
+                    key={eventColor}
+                    $color={eventColor}
+                    $selected={watchedColor === eventColor}
+                    onClick={() => handleColorSelect(eventColor)}
+                    aria-label={`${t('calendar.selectColor')} ${eventColor}`}
+                    type="button"
+                  />
+                ))}
+              </ColorOptions>
+            </FormGroup>
+          </form>
         </ModalBody>
         
         <ModalFooter>
           {event && (
             <Button 
               onClick={handleDelete} 
-              variant="danger" 
-              leftIcon={<FiTrash2 />}
+              variant="primary" 
+              icon={<FiTrash2 />}
             >
               {t('calendar.delete')}
             </Button>
           )}
           
           <ActionButtons>
-            <Button onClick={onClose} variant="outline">
+            <Button onClick={onClose} variant="secondary">
               {t('common.cancel')}
             </Button>
-            <Button onClick={handleSave} variant="primary">
+            <Button 
+              type="submit"
+              form="event-form" 
+              variant="primary"
+              icon={<FiCheck />}
+            >
               {t('common.save')}
             </Button>
           </ActionButtons>
