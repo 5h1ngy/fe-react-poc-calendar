@@ -15,7 +15,7 @@ A modern and feature-rich React calendar application with multiple views (day, w
 
 <p align="center">
    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-      <img src="./assets/preview_desktop_dark.png" alt="Preview Desktop Dark" style="height: 150px; object-fit: contain;">
+      <img src="./assets/preview_desktop_dark.png" alt="Preview Desktop Dark" style="height: 250px; object-fit: contain;">
    </div>
 </p>
 
