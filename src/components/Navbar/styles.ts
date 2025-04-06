@@ -29,6 +29,10 @@ export const Logo = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
+  
   a {
     color: ${({ theme }) => theme.colors.text.primary};
     text-decoration: none;

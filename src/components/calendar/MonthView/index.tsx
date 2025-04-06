@@ -4,7 +4,6 @@ import {
   MonthViewContainer, 
   MonthGrid, 
   DayCell, 
-  DayHeader, 
   DayNumber, 
   AddButton,
   EventsList,
@@ -21,6 +20,11 @@ interface MonthViewProps {
   currentDate: moment.Moment;
   onEventClick: (event: CalendarEvent) => void;
   onAddEvent: (date?: moment.Moment) => void;
+}
+
+interface StyledDayHeaderProps {
+  isCurrentMonth?: boolean;
+  children?: React.ReactNode;
 }
 
 const MonthView: React.FC<MonthViewProps> = ({ currentDate, onEventClick, onAddEvent }) => {
@@ -69,7 +73,7 @@ const MonthView: React.FC<MonthViewProps> = ({ currentDate, onEventClick, onAddE
               isToday={day.isToday}
               isWeekend={isWeekend}
             >
-              <DayHeader isCurrentMonth={day.isCurrentMonth}>
+              <div className="day-header" style={{ opacity: day.isCurrentMonth ? 1 : 0.5 }}>
                 <DayNumber isToday={day.isToday} isCurrentMonth={day.isCurrentMonth}>
                   {day.date.format('D')}
                 </DayNumber>
@@ -82,7 +86,7 @@ const MonthView: React.FC<MonthViewProps> = ({ currentDate, onEventClick, onAddE
                     <FiPlus />
                   </AddButton>
                 )}
-              </DayHeader>
+              </div>
               
               {day.isCurrentMonth && (
                 <EventsList>

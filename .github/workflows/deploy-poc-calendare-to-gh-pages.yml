@@ -1,9 +1,10 @@
-name: pages-build
+name: Deploy Avatar Maker to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # O il tuo branch di riferimento
+      - develop  # O il tuo branch di riferimento
+  workflow_dispatch:  # Permette l'esecuzione manuale tramite l'interfaccia di GitHub
 
 permissions:
   contents: write
@@ -11,7 +12,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,16 +35,41 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build Prod environment
+      - name: Build production environment
         run: yarn build:prod
+        env:
+          NODE_ENV: production
 
-      - name: Copy index.html to 404.html for SPA routing
-        run: cp dist/index.html dist/404.html
+      # COMMENTATO: Base path già configurato in vite.config.ts
+      # - name: Update base path in index.html for GH Pages
+      #   run: |
+      #     find dist -type f -name "*.html" -exec sed -i 's|<head>|<head><base href="/fe-react-poc-calendar/">|g' {} \;
+      #     find dist -type f -name "*.js" -exec sed -i 's|"/"|"\/fe-react-poc-calendar\/"|g' {} \;
 
-      - name: Deploy Frontend to GitHub Pages
+      # Crea un file CNAME se hai un dominio personalizzato
+      # - name: Create CNAME file
+      #   run: echo "yourdomain.com" > dist/CNAME
+
+      # COMMENTATO: File 404.html già creato nella cartella public
+      # - name: Copy index.html to 404.html for SPA routing
+      #   run: cp dist/index.html dist/404.html
+
+      # Aggiungiamo un favicon.ico se mancante
+      - name: Check and copy favicon if missing
+        run: |
+          if [ ! -f dist/favicon.ico ]; then
+            if [ -f public/avatar.png ]; then
+              cp public/avatar.png dist/favicon.ico
+            fi
+          fi
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
           destination_dir: ./
+          user_name: '5h1ngy'
+          user_email: '5h1ngy@example.com'
+          commit_message: 'Deploy: Avatar Maker App v${{ github.sha }}'

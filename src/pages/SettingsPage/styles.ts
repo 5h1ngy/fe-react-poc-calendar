@@ -83,7 +83,7 @@ export const ImportLabel = styled.label`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: ${({ theme }) => theme.colors.accent.hover};
+    background-color: ${({ theme }) => theme.colors.accent.primary};
   }
   
   svg {

@@ -40,7 +40,7 @@ export const configureLocale = (): void => {
       yy: '%d anni',
     },
     dayOfMonthOrdinalParse: /\d{1,2}º/,
-    ordinal: '%dº',
+    ordinal: (n: number) => `${n}º`,
     week: {
       dow: 1, // Monday is the first day of the week.
       doy: 4, // The week that contains Jan 4th is the first week of the year.

@@ -2,7 +2,10 @@ import { InputHTMLAttributes, ReactNode } from 'react';
 
 export type InputSize = 'small' | 'medium' | 'large';
 
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+// Estendere InputHTMLAttributes ma ridefinire la property 'prefix' per accettare ReactNode
+type BaseInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'>;
+
+export interface InputProps extends BaseInputProps {
   /** Input label */
   label?: string;
   /** Error message to display */
