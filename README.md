@@ -14,7 +14,7 @@
 A modern and feature-rich React calendar application with multiple views (day, week, month) and advanced event management capabilities.
 
 <p align="center">
-   <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+   <div style="display: flex; justify-items: center; justify-content: center; align-items: center; align-content: center; gap: 10px;">
       <img src="./assets/preview_desktop_dark.png" alt="Preview Desktop Dark" style="height: 250px; object-fit: contain;">
    </div>
 </p>
