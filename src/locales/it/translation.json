@@ -1,0 +1,92 @@
+{
+  "common": {
+    "appName": "fe-react-poc-calendar",
+    "loading": "Caricamento in corso...",
+    "error": "Errore",
+    "success": "Operazione completata",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "search": "Cerca",
+    "actions": "Azioni",
+    "language": "Lingua",
+    "theme": "Tema",
+    "darkMode": "Modalità scura",
+    "lightMode": "Modalità chiara",
+    "close": "Chiudi"
+  },
+  "navigation": {
+    "home": "Home",
+    "calendar": "Calendario",
+    "settings": "Impostazioni"
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "welcome": "Benvenuto nel Calendario",
+      "description": "Un'applicazione calendario moderna con funzionalità di gestione eventi"
+    },
+    "notFound": {
+      "title": "Pagina non trovata",
+      "message": "La pagina che stai cercando non esiste.",
+      "backToHome": "Torna alla Home"
+    }
+  },
+  "calendar": {
+    "day": "Giorno",
+    "week": "Settimana",
+    "month": "Mese",
+    "today": "Oggi",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "addEvent": "Aggiungi evento",
+    "editEvent": "Modifica evento",
+    "deleteEvent": "Elimina evento",
+    "title": "Titolo",
+    "titlePlaceholder": "Inserisci un titolo per l'evento",
+    "titleRequired": "Il titolo è obbligatorio",
+    "description": "Descrizione",
+    "descriptionPlaceholder": "Inserisci una descrizione per l'evento",
+    "date": "Data",
+    "time": "Ora",
+    "duration": "Durata",
+    "minutes": "minuti",
+    "color": "Colore",
+    "selectColor": "Seleziona colore",
+    "confirmDelete": "Sei sicuro di voler eliminare questo evento?",
+    "timeScale": "Scala temporale",
+    "noEvents": "Nessun evento",
+    "noEventsForDay": "Nessun evento per questa giornata",
+    "showMore": "Mostra altri {{count}}",
+    "showLess": "Mostra meno"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "description": "Personalizza le impostazioni dell'applicazione calendario",
+    "appearance": "Aspetto",
+    "language": "Lingua",
+    "english": "Inglese",
+    "italian": "Italiano",
+    "theme": "Tema",
+    "themeDescription": "Scegli tra modalità chiara e scura",
+    "colorPalette": "Palette di colori",
+    "colorPaletteDescription": "Seleziona i colori principali dell'interfaccia",
+    "dataManagement": "Gestione dati",
+    "importExport": "Importa/Esporta",
+    "importExportDescription": "Importa o esporta i tuoi eventi del calendario",
+    "importData": "Importa dati",
+    "exportData": "Esporta dati",
+    "clearData": "Cancella dati",
+    "importSuccess": "Importati {{count}} eventi con successo",
+    "importError": "Errore durante l'importazione. Controlla il formato del file.",
+    "exportSuccess": "Eventi esportati con successo",
+    "exportError": "Errore durante l'esportazione",
+    "clearSuccess": "Tutti gli eventi sono stati cancellati",
+    "confirmClear": "Sei sicuro di voler cancellare tutti gli eventi? Questa azione non può essere annullata."
+  },
+  "meta": {
+    "description": "Un'applicazione calendario moderna con funzionalità di gestione eventi"
+  }
+}
