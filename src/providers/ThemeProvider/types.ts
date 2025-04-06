@@ -49,6 +49,7 @@ export interface Colors {
     divider: string;
     primary: string;
     light: string;
+    muted: string;
   };
   
   // Component-specific colors

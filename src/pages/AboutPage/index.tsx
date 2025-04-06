@@ -57,14 +57,14 @@ const AboutPage: React.FC = () => {
       role: 'Autore Principale',
       bio: 'Sviluppatore frontend con particolare attenzione all\'architettura, performance e UX avanzata. Specializzato nell\'ecosistema React e nell\'implementazione di design system scalabili.',
       github: 'https://github.com/5h1ngy',
-      avatar: 'https://avatars.githubusercontent.com/u/avatar1'
+      avatar: '/avatar_5h1ngy.png'
     },
     {
       name: 'Davide1786',
       role: 'Collaboratore & Fork Maintainer',
       bio: 'Frontend developer con focus su UI/UX e architettura moderna delle applicazioni web. Passione per le applicazioni React ottimizzate e responsive che offrono esperienze utente eccellenti.',
       github: 'https://github.com/Davide1786',
-      avatar: 'https://avatars.githubusercontent.com/u/avatar2'
+      avatar: '/avatar_davide.jpg'
     }
   ];
 
@@ -78,27 +78,27 @@ const AboutPage: React.FC = () => {
       <AboutContainer>
         <AboutHeader>
           <h1>{t('common.appName')}</h1>
-          <p>{t('pages.about.subtitle', 'Una moderna applicazione calendario con design 2025')}</p>
+          <p>{t('pages.about.subtitle')}</p>
         </AboutHeader>
         
         <AboutContent>
           <AboutSection>
-            <h2>{t('pages.about.projectOverview', 'Panoramica del Progetto')}</h2>
+            <h2>{t('pages.about.projectOverview')}</h2>
             <Card shadow="md">
               <p>
-                fe-react-poc-calendar è un'applicazione moderna per la gestione degli eventi e degli appuntamenti con un'interfaccia utente ispirata agli standard UI/UX del 2025.
+                {t('common.appName')} {t('pages.about.description', 'è un\'applicazione moderna per la gestione degli eventi e degli appuntamenti con un\'interfaccia utente ispirata agli standard UI/UX del 2025.')}
               </p>
               <p>
-                Questo progetto è un refactoring profondo del progetto originale "Claendar", ricostruito completamente utilizzando il boilerplate bl-custom-fe-react come base, ma con significativi miglioramenti nell'architettura, UI/UX e funzionalità.
+                {t('pages.about.projectHistory', 'Questo progetto è un refactoring profondo del progetto originale "Calendar", ricostruito completamente utilizzando il boilerplate bl-custom-fe-react come base, ma con significativi miglioramenti nell\'architettura, UI/UX e funzionalità.')}
               </p>
               <p>
-                L'applicazione offre multiple viste calendario (giorno, settimana, mese), gestione completa degli eventi, persistenza dei dati e funzionalità di import/export per il backup dei dati.
+                {t('pages.about.projectCapabilities', 'L\'applicazione offre multiple viste calendario (giorno, settimana, mese), gestione completa degli eventi, persistenza dei dati e funzionalità di import/export per il backup dei dati.')}
               </p>
             </Card>
           </AboutSection>
           
           <AboutSection>
-            <h2>{t('pages.about.techStack', 'Tech Stack')}</h2>
+            <h2>{t('pages.about.techStack')}</h2>
             <Card shadow="sm">
               <TechStackGrid>
                 {techStack.map((tech, index) => (
@@ -112,7 +112,7 @@ const AboutPage: React.FC = () => {
           </AboutSection>
           
           <TeamSection>
-            <h2>{t('pages.about.meetTheTeam', 'Contributors')}</h2>
+            <h2>{t('pages.about.meetTheTeam')}</h2>
             <TeamGrid>
               {team.map((member, index) => (
                 <TeamMember key={index}>
@@ -135,7 +135,7 @@ const AboutPage: React.FC = () => {
           </TeamSection>
           
           <AboutSection>
-            <h2>{t('pages.about.features', 'Funzionalità')}</h2>
+            <h2>{t('pages.about.features')}</h2>
             <Card shadow="md">
               <ProjectFeatures>
                 {features.map((feature, index) => (
@@ -149,13 +149,13 @@ const AboutPage: React.FC = () => {
           </AboutSection>
           
           <AboutSection>
-            <h2>{t('pages.about.gettingStarted', 'Come Iniziare')}</h2>
+            <h2>{t('pages.about.gettingStarted')}</h2>
             <Card shadow="md">
               <p>
-                Pronto a utilizzare questa applicazione? Esplora le varie visualizzazioni (giorno, settimana, mese) e inizia ad aggiungere i tuoi eventi!
+                {t('pages.about.readyToUse', 'Pronto a utilizzare questa applicazione? Esplora le varie visualizzazioni (giorno, settimana, mese) e inizia ad aggiungere i tuoi eventi!')}
               </p>
               <p>
-                Puoi personalizzare l'interfaccia nelle impostazioni, scegliendo tra tema chiaro e scuro, e selezionando la tua palette di colori preferita.
+                {t('pages.about.customizeInterface', 'Puoi personalizzare l\'interfaccia nelle impostazioni, scegliendo tra tema chiaro e scuro, e selezionando la tua palette di colori preferita.')}
               </p>
               <Button 
                 variant="primary" 

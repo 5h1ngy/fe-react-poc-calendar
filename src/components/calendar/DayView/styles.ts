@@ -5,20 +5,26 @@ export const DayViewContainer = styled.div`
   height: calc(100vh - 200px);
   min-height: 600px;
   overflow: hidden;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border.default};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
   margin: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
 `;
 
 export const TimeColumn = styled.div`
   width: 70px;
   overflow-y: auto;
-  background-color: transparent;
-  border-radius: 8px;
-  margin-right: 8px;
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? 'transparent' 
+      : theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+  margin-right: 12px;
+  padding: 4px 0;
   scrollbar-width: thin;
+  border-right: 1px solid ${({ theme }) => theme.colors.border.default};
   
   &::-webkit-scrollbar {
     width: 4px;
@@ -29,9 +35,11 @@ export const TimeColumn = styled.div`
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => `${theme.colors.border.primary}80`};
-    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.border.default};
+    border-radius: ${({ theme }) => theme.borderRadius.xs};
   }
+  
+  transition: all 0.2s ease;
 `;
 
 export const TimeSlot = styled.div`
@@ -39,12 +47,17 @@ export const TimeSlot = styled.div`
   padding: 4px 10px;
   text-align: right;
   color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
   
   &::after {
     content: '';
@@ -61,11 +74,18 @@ export const DayContent = styled.div`
   flex: 1;
   overflow-y: auto;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.background.secondary};
-  border-radius: 12px;
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#fffdf7' /* Tono panna/crema per light mode come richiesto */
+      : theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
+  border: 1px solid ${({ theme }) => theme.colors.border.default};
+  box-shadow: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? 'rgba(149, 157, 165, 0.1) 0px 1px 3px 0px' 
+      : 'none'};
+  transition: all 0.3s ease;
   
   &::-webkit-scrollbar {
     width: 4px;
@@ -76,20 +96,35 @@ export const DayContent = styled.div`
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => `${theme.colors.border.primary}80`};
-    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.border.default};
+    border-radius: ${({ theme }) => theme.borderRadius.xs};
   }
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'rgba(149, 157, 165, 0.15) 0px 3px 6px 0px' 
+        : 'rgba(0, 0, 0, 0.2) 0px 2px 5px 0px'};
   }
 `;
 
 export const TimeCell = styled.div<{ isCurrentTime?: boolean }>`
   height: 60px;
-  border-bottom: 1px dashed ${({ theme }) => `${theme.colors.border.primary}30`};
+  border-bottom: 1px dashed ${({ theme }) => 
+    theme.mode === 'light'
+      ? theme.colors.border.primary + '30'
+      : theme.colors.border.default + '70'};
   position: relative;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: ${({ theme }) => 
+      theme.mode === 'light'
+        ? 'rgba(245, 242, 232, 0.5)' /* Tono panna semitrasparente */
+        : 'rgba(22, 27, 34, 0.3)' /* Tono scuro semitrasparente */
+    };
+  }
   
   ${({ isCurrentTime, theme }) => isCurrentTime && `
     &::after {
@@ -117,15 +152,20 @@ export const Event = styled.div<{
   right: 16px;
   background-color: ${({ $color }) => `${$color}CC`};
   color: white;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   padding: 10px 14px;
-  font-size: 0.875rem;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   overflow: hidden;
   cursor: pointer;
   z-index: 2;
-  box-shadow: 0 2px 8px ${({ $color }) => `${$color}40`};
+  box-shadow: ${({ $color, theme }) => 
+    theme.mode === 'light'
+      ? `0 2px 8px ${$color}40`
+      : `0 3px 10px ${$color}60`};
+  border-left: 3px solid ${({ $color }) => $color};
   backdrop-filter: blur(4px);
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   
   &:hover {
     box-shadow: 0 4px 12px ${({ $color }) => `${$color}60`};

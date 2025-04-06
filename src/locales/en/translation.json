@@ -15,18 +15,34 @@
     "theme": "Theme",
     "darkMode": "Dark Mode",
     "lightMode": "Light Mode",
-    "close": "Close"
+    "close": "Close",
+    "contributors": "Contributors"
   },
   "navigation": {
     "home": "Home",
     "calendar": "Calendar",
-    "settings": "Settings"
+    "settings": "Settings",
+    "about": "About"
   },
   "pages": {
     "home": {
       "title": "Home",
       "welcome": "Welcome to Calendar",
       "description": "A modern calendar application with event management features"
+    },
+    "about": {
+      "title": "About",
+      "subtitle": "A modern calendar application with 2025 design",
+      "projectOverview": "Project Overview",
+      "techStack": "Tech Stack",
+      "meetTheTeam": "Contributors",
+      "features": "Features",
+      "gettingStarted": "Getting Started",
+      "description": "is a modern application for managing events and appointments with a user interface inspired by 2025 UI/UX standards.",
+      "projectHistory": "This project is a deep refactoring of the original 'Calendar' project, completely rebuilt using the bl-custom-fe-react boilerplate as a base, but with significant improvements in architecture, UI/UX and functionality.",
+      "projectCapabilities": "The application offers multiple calendar views (day, week, month), complete event management, data persistence, and import/export functionality for data backup.",
+      "readyToUse": "Ready to use this application? Explore the various views (day, week, month) and start adding your events!",
+      "customizeInterface": "You can customize the interface in the settings, choosing between light and dark theme, and selecting your favorite color palette."
     },
     "notFound": {
       "title": "Page Not Found",

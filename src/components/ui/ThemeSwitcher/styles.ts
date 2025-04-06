@@ -13,7 +13,7 @@ export const SwitchTrack = styled.div<{ $isDark: boolean }>`
   width: 56px;
   height: 28px;
   background-color: ${({ theme, $isDark }) => 
-    $isDark ? '#141414' : '#F8F6F1'};
+    $isDark ? theme.colors.surface : theme.colors.background.secondary};
   border-radius: 14px;
   position: relative;
   display: flex;
@@ -21,7 +21,7 @@ export const SwitchTrack = styled.div<{ $isDark: boolean }>`
   justify-content: space-between;
   padding: 0 6px;
   border: 1px solid ${({ theme }) => theme.colors.border.default};
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 `;
 
 export const SwitchThumb = styled.div<{ $isDark: boolean }>`
@@ -30,10 +30,10 @@ export const SwitchThumb = styled.div<{ $isDark: boolean }>`
   width: 20px;
   height: 20px;
   background-color: ${({ theme, $isDark }) => 
-    $isDark ? '#FFFFFF' : '#FFC53D'};
+    $isDark ? theme.colors.text.primary : theme.colors.accent.primary};
   border-radius: 50%;
   transition: left 0.3s, background-color 0.3s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: ${({ theme }) => theme.shadows.sm};
 `;
 
 export const IconContainer = styled.div<{ $position: 'left' | 'right' }>`
@@ -42,9 +42,10 @@ export const IconContainer = styled.div<{ $position: 'left' | 'right' }>`
   justify-content: center;
   color: ${({ theme, $position }) => 
     $position === 'left' 
-      ? '#FFC53D' 
+      ? theme.colors.accent.primary
       : theme.mode === 'dark' 
-        ? '#FFFFFF' 
-        : '#141414'};
+        ? theme.colors.text.primary
+        : theme.colors.text.secondary};
   z-index: 1;
+  transition: color 0.3s ease;
 `;

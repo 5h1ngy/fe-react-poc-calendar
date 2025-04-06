@@ -6,9 +6,13 @@ export const StyledCard = styled.div<{
   $bordered: boolean;
   $shadow: CardShadow;
 }>`
-  background-color: ${({ theme }) => theme.colors.components.card};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#fffdf7' /* Tono panna/crema per light mode come richiesto */
+      : theme.colors.surface};
+  border-radius: ${({ theme }) => theme.borderRadius.sm}; /* GitHub usa bordi più arrotondati */
   overflow: hidden;
+  transition: all 0.2s ease;
   
   ${({ $bordered, theme }) => $bordered && css`
     border: 1px solid ${theme.colors.border.default};
@@ -29,10 +33,16 @@ export const StyledCard = styled.div<{
   }}
   
   ${({ $hoverable }) => $hoverable && css`
-    transition: transform 0.3s, box-shadow 0.3s;
     &:hover {
-      transform: translateY(-4px);
       box-shadow: ${({ theme }) => theme.shadows.md};
+      border-color: ${({ theme }) => theme.mode === 'dark' ? 
+        'rgba(255,255,255,0.1)' : 
+        theme.colors.accent.primary + '30'};
+      transform: translateY(-2px); /* Movimento più sottile come in GitHub */
+      background-color: ${({ theme }) => 
+        theme.mode === 'light' 
+          ? '#f8f6f1' /* Tono panna più chiaro all'hover */
+          : theme.colors.background.secondary};
     }
   `}
 `;

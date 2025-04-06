@@ -15,18 +15,34 @@
     "theme": "Tema",
     "darkMode": "Modalità scura",
     "lightMode": "Modalità chiara",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "contributors": "Collaboratori"
   },
   "navigation": {
     "home": "Home",
     "calendar": "Calendario",
-    "settings": "Impostazioni"
+    "settings": "Impostazioni",
+    "about": "Chi siamo"
   },
   "pages": {
     "home": {
       "title": "Home",
       "welcome": "Benvenuto nel Calendario",
       "description": "Un'applicazione calendario moderna con funzionalità di gestione eventi"
+    },
+    "about": {
+      "title": "Chi siamo",
+      "subtitle": "Un'applicazione calendario moderna con design 2025",
+      "projectOverview": "Panoramica del Progetto",
+      "techStack": "Stack Tecnologico",
+      "meetTheTeam": "Collaboratori",
+      "features": "Funzionalità",
+      "gettingStarted": "Come Iniziare",
+      "description": "è un'applicazione moderna per la gestione degli eventi e degli appuntamenti con un'interfaccia utente ispirata agli standard UI/UX del 2025.",
+      "projectHistory": "Questo progetto è un refactoring profondo del progetto originale 'Calendar', ricostruito completamente utilizzando il boilerplate bl-custom-fe-react come base, ma con significativi miglioramenti nell'architettura, UI/UX e funzionalità.",
+      "projectCapabilities": "L'applicazione offre multiple viste calendario (giorno, settimana, mese), gestione completa degli eventi, persistenza dei dati e funzionalità di import/export per il backup dei dati.",
+      "readyToUse": "Pronto a utilizzare questa applicazione? Esplora le varie visualizzazioni (giorno, settimana, mese) e inizia ad aggiungere i tuoi eventi!",
+      "customizeInterface": "Puoi personalizzare l'interfaccia nelle impostazioni, scegliendo tra tema chiaro e scuro, e selezionando la tua palette di colori preferita."
     },
     "notFound": {
       "title": "Pagina non trovata",

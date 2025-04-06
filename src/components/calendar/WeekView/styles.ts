@@ -5,20 +5,30 @@ export const WeekViewContainer = styled.div`
   height: calc(100vh - 200px);
   min-height: 600px;
   overflow: hidden;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#fffdf7' /* Tono panna/crema per light mode come richiesto */
+      : theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border.default};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
   margin: 0.5rem;
   padding: 0.5rem;
+  transition: all 0.3s ease;
 `;
 
 export const TimeColumn = styled.div`
   width: 70px;
   overflow-y: auto;
-  background-color: transparent;
-  border-radius: 8px;
-  margin-right: 8px;
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#f8f6f1' /* Tono panna più chiaro per light mode */
+      : theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+  margin-right: 10px;
+  padding: 4px 0;
   scrollbar-width: thin;
+  border-right: 1px solid ${({ theme }) => theme.colors.border.default};
   
   &::-webkit-scrollbar {
     width: 4px;
@@ -29,9 +39,11 @@ export const TimeColumn = styled.div`
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => `${theme.colors.border.primary}80`};
-    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.border.default};
+    border-radius: ${({ theme }) => theme.borderRadius.xs};
   }
+  
+  transition: all 0.2s ease;
 `;
 
 export const TimeSlot = styled.div<{ visible?: boolean }>`
@@ -39,12 +51,17 @@ export const TimeSlot = styled.div<{ visible?: boolean }>`
   padding: 4px 10px;
   text-align: right;
   color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   position: relative;
   display: ${({ visible = true }) => (visible ? 'flex' : 'none')};
   align-items: flex-start;
   justify-content: flex-end;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
   
   &::after {
     content: '';
@@ -63,7 +80,12 @@ export const DaysContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   gap: 8px;
-  padding-right: 4px;
+  padding-right: 6px;
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#fcf9f2' /* Tono panna per light mode */
+      : theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
   
   &::-webkit-scrollbar {
     width: 4px;
@@ -74,25 +96,46 @@ export const DaysContainer = styled.div`
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => `${theme.colors.border.primary}80`};
-    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.border.default};
+    border-radius: ${({ theme }) => theme.borderRadius.xs};
   }
+  
+  transition: all 0.2s ease;
 `;
 
 export const DayColumn = styled.div<{ isToday?: boolean }>`
   flex: 1;
   min-width: 120px;
-  position: relative;
   background-color: ${({ isToday, theme }) => 
-    isToday ? `${theme.colors.primary}15` : `${theme.colors.background.secondary}`};
-  border-radius: 12px;
+    isToday 
+      ? theme.mode === 'light'
+        ? '#f5f2e8' /* Tono panna più chiaro per il giorno corrente */
+        : theme.colors.background.primary + '60'
+      : 'transparent'};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+  border: ${({ isToday, theme }) => 
+    isToday 
+      ? `1px solid ${theme.colors.accent.primary}30`
+      : 'none'};
+  position: relative;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: ${({ isToday, theme }) => 
+      isToday 
+        ? theme.mode === 'light'
+          ? '#f0ece0' /* Hover più intenso per il giorno corrente */
+          : theme.colors.background.primary + '80'
+        : theme.mode === 'light'
+          ? '#f8f5eb' /* Hover leggero per altri giorni */
+          : theme.colors.background.primary + '20'};
+  }
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: ${({ theme }) => theme.mode === 'light' ? 'rgba(149, 157, 165, 0.1) 0px 1px 3px 0px' : 'none'};
   transition: transform 0.2s ease;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
   
   &:last-child {
@@ -102,8 +145,21 @@ export const DayColumn = styled.div<{ isToday?: boolean }>`
 
 export const TimeCell = styled.div<{ isCurrentTime?: boolean }>`
   height: 60px;
-  border-bottom: 1px dashed ${({ theme }) => `${theme.colors.border.primary}30`};
+  border-bottom: 1px dashed ${({ theme }) => 
+    theme.mode === 'light'
+      ? 'rgba(149, 157, 165, 0.2)' /* Colore GitHub light */
+      : 'rgba(110, 118, 129, 0.4)' /* Colore GitHub dark */
+  };
   position: relative;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: ${({ theme }) => 
+      theme.mode === 'light'
+        ? 'rgba(245, 242, 232, 0.5)' /* Tono panna semitrasparente */
+        : 'rgba(22, 27, 34, 0.3)' /* Tono scuro semitrasparente */
+    };
+  }
   
   ${({ isCurrentTime, theme }) => isCurrentTime && `
     &::after {

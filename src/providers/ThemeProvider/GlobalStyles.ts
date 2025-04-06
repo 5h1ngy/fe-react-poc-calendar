@@ -11,8 +11,8 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   :root {
     font-size: 16px;
     --primary-color: ${({ theme }) => theme.colors.primary};
-    --accent-color: ${({ theme }) => theme.colors.accent};
-    --background-color: ${({ theme }) => theme.colors.background};
+    --accent-color: ${({ theme }) => theme.colors.accent.primary};
+    --background-color: ${({ theme }) => theme.colors.background.primary};
     --surface-color: ${({ theme }) => theme.colors.surface};
     --text-color: ${({ theme }) => theme.colors.text.primary};
     --text-secondary-color: ${({ theme }) => theme.colors.text.secondary};
@@ -26,7 +26,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
 
   body {
     font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.background.primary};
     color: ${({ theme }) => theme.colors.text.primary};
     line-height: ${({ theme }) => theme.typography.lineHeight.md};
     font-size: ${({ theme }) => theme.typography.fontSize.md};

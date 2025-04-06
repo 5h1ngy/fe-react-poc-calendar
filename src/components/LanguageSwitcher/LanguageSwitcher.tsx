@@ -14,13 +14,13 @@ const LanguageButton = styled.button`
   align-items: center;
   background: none;
   border: none;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text.primary}; /* Riferimento corretto al colore del testo primario */
   cursor: pointer;
   padding: 8px;
   font-size: 1rem;
   gap: 6px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  transition: all 0.2s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.backgroundHover};
@@ -28,6 +28,7 @@ const LanguageButton = styled.button`
 
   svg {
     font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.text.primary}; /* Colore dell'icona che segue il tema */
   }
 `;
 
@@ -35,12 +36,12 @@ const LanguageDropdown = styled.div<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: ${({ theme }) => theme.colors.background};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  box-shadow: ${({ theme }) => theme.shadows.md};
   min-width: 150px;
-  z-index: 100;
+  z-index: ${({ theme }) => theme.zIndex.dropdown};
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   margin-top: 8px;
 `;
@@ -53,8 +54,10 @@ const LanguageOption = styled.button<{ isActive: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
-  color: ${({ theme, isActive }) => (isActive ? theme.colors.primary : theme.colors.text)};
-  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
+  color: ${({ theme, isActive }) => (isActive ? theme.colors.primary : theme.colors.text.primary)};
+  font-weight: ${({ theme, isActive }) => (isActive ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.regular)};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  transition: all 0.2s ease;
   
   &:hover {
     background-color: ${({ theme }) => theme.colors.backgroundHover};

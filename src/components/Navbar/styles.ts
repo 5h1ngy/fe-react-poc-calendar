@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 export const NavbarContainer = styled.nav`
   background-color: ${({ theme }) => theme.colors.components.navbar};
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.sm};
   position: sticky;
   top: 0;
   z-index: ${({ theme }) => theme.zIndex.sticky};
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.default};
 `;
 
 export const NavbarContent = styled.div`
@@ -25,14 +26,16 @@ export const NavbarContent = styled.div`
 `;
 
 export const Logo = styled.div`
-  font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   
   a {
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.text.primary};
     text-decoration: none;
+    transition: color 0.2s ease;
     
     &:hover {
+      color: ${({ theme }) => theme.colors.accent.primary};
       text-decoration: none;
     }
   }
@@ -58,17 +61,19 @@ export const NavLinks = styled.div<{ $mobileMenuOpen: boolean }>`
 
 export const NavLink = styled(Link)<{ $isActive: boolean }>`
   color: ${({ $isActive, theme }) => 
-    $isActive ? theme.colors.accent : theme.colors.text.primary};
+    $isActive ? theme.colors.accent.primary : theme.colors.text.primary};
   text-decoration: none;
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   font-weight: ${({ $isActive, theme }) => 
     $isActive ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.medium};
   position: relative;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   
   &:hover {
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accent.primary};
     text-decoration: none;
+    background-color: ${({ theme }) => theme.colors.backgroundHover};
   }
   
   ${({ $isActive, theme }) => 

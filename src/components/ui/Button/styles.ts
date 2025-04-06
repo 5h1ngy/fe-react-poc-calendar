@@ -36,7 +36,7 @@ const getSizeStyles = (size: ButtonProps['size']) => {
   }
 };
 
-// Button variant styles
+// Button variant styles - GitHub 2025 style
 const getVariantStyles = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'secondary':
@@ -44,14 +44,16 @@ const getVariantStyles = (variant: ButtonProps['variant']) => {
         background-color: ${({ theme }) => theme.colors.components.button.secondary.background};
         color: ${({ theme }) => theme.colors.components.button.secondary.text};
         border: 1px solid ${({ theme }) => theme.colors.border.default};
+        box-shadow: ${({ theme }) => theme.mode === 'dark' ? 'none' : '0 1px 0 rgba(31,35,40,0.04)'};
         
         &:hover:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.secondary.hover};
+          border-color: ${({ theme }) => theme.mode === 'dark' ? theme.colors.border.default : 'rgba(31,35,40,0.15)'};
         }
         
         &:active:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.secondary.hover};
-          transform: translateY(1px);
+          box-shadow: ${({ theme }) => theme.mode === 'dark' ? 'none' : 'inset 0 1px 0 rgba(0,0,0,0.2)'};
         }
       `;
     case 'ghost':
@@ -62,10 +64,12 @@ const getVariantStyles = (variant: ButtonProps['variant']) => {
         
         &:hover:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.ghost.hover};
+          border-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(240,246,252,0.1)' : 'rgba(31,35,40,0.15)'};
         }
         
         &:active:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.ghost.hover};
+          border-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(240,246,252,0.1)' : 'rgba(31,35,40,0.15)'};
         }
       `;
     case 'link':
@@ -89,7 +93,12 @@ const getVariantStyles = (variant: ButtonProps['variant']) => {
       return css`
         background-color: ${({ theme }) => theme.colors.components.button.primary.background};
         color: ${({ theme }) => theme.colors.components.button.primary.text};
-        border: none;
+        border: 1px solid ${({ theme }) => theme.mode === 'dark' ? 
+          'rgba(240,246,252,0.1)' : 
+          'rgba(31,35,40,0.15)'};
+        box-shadow: ${({ theme }) => theme.mode === 'dark' ? 
+          'none' : 
+          '0 1px 0 rgba(31,35,40,0.04), inset 0 1px 0 rgba(255,255,255,0.25)'};
         
         &:hover:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.primary.hover};
@@ -97,7 +106,9 @@ const getVariantStyles = (variant: ButtonProps['variant']) => {
         
         &:active:not(:disabled) {
           background-color: ${({ theme }) => theme.colors.components.button.primary.hover};
-          transform: translateY(1px);
+          box-shadow: ${({ theme }) => theme.mode === 'dark' ? 
+            'none' : 
+            'inset 0 1px 0 rgba(0,0,0,0.2)'};
         }
       `;
   }
@@ -107,10 +118,10 @@ export const StyledButton = styled.button<ButtonProps & { $hasIcon: boolean, $fu
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  border-radius: ${({ theme }) => theme.borderRadius.sm}; /* GitHub usa bordi più arrotondati */
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   cursor: pointer;
-  transition: all 0.2s ${({ theme }) => theme.animation.easing.easeInOut};
+  transition: all 0.2s ${({ theme }) => theme.animation.easing.easeOut};
   outline: none;
   position: relative;
   white-space: nowrap;
@@ -126,10 +137,13 @@ export const StyledButton = styled.button<ButtonProps & { $hasIcon: boolean, $fu
     cursor: not-allowed;
   }
   
-  /* Focus state */
+  /* Focus state (stile GitHub) */
   &:focus-visible {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.background}, 
-                0 0 0 4px ${({ theme }) => theme.colors.primary}80;
+    box-shadow: ${({ theme }) => theme.mode === 'dark' ? 
+      `0 0 0 2px ${theme.colors.background.primary}, 0 0 0 4px ${theme.colors.accent.primary}80` :
+      `0 0 0 3px rgba(9, 105, 218, 0.3)`
+    };
+    outline: none;
   }
 `;
 

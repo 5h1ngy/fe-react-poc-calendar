@@ -20,9 +20,15 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.background.secondary};
-  border-radius: 16px;
-  box-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 12px 40px rgba(0, 0, 0, 0.4)' : '0 12px 40px rgba(0, 0, 0, 0.25)'};
+  background-color: ${({ theme }) => 
+    theme.mode === 'light'
+      ? '#fffdf7' /* Tono panna/crema per light mode come richiesto */
+      : theme.colors.surface};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  box-shadow: ${({ theme }) => 
+    theme.mode === 'dark' 
+      ? '0 12px 40px rgba(0, 0, 0, 0.5)' 
+      : '0 12px 40px rgba(0, 0, 0, 0.25)'};
   width: 100%;
   max-width: 550px;
   overflow: hidden;
@@ -30,7 +36,7 @@ export const ModalContainer = styled.div`
   isolation: isolate;
   backface-visibility: hidden;
   transform: translateZ(0);
-  border: 1px solid ${({ theme }) => `${theme.colors.border.primary}40`};
+  border: 1px solid ${({ theme }) => theme.colors.border.default};
   opacity: 1 !important;
   -webkit-transform: translate3d(0, 0, 0);
   will-change: transform;

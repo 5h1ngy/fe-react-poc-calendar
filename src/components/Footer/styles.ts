@@ -2,9 +2,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const FooterContainer = styled.footer`
-  background-color: ${({ theme }) => theme.colors.components.navbar};
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#f8f6f1' /* Tono panna per light mode */
+      : theme.colors.surface};
+  border-top: 1px solid ${({ theme }) => theme.colors.border.default};
   padding: ${({ theme }) => theme.spacing.xl} 0 ${({ theme }) => theme.spacing.md};
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: auto; /* Push footer to bottom */
+  box-shadow: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '0 -1px 5px rgba(149, 157, 165, 0.1)' 
+      : 'none'};
 `;
 
 export const FooterContent = styled.div`
@@ -39,10 +48,15 @@ export const FooterLogo = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   
   a {
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accent.primary};
     text-decoration: none;
+    transition: color 0.2s ease;
     
     &:hover {
+      color: ${({ theme }) => 
+        theme.mode === 'light' 
+          ? theme.colors.accent.secondary
+          : theme.colors.accent.primary + '90'};
       text-decoration: none;
     }
   }

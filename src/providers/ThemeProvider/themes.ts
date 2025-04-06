@@ -12,9 +12,10 @@ const baseTheme = {
   },
   typography: {
     fontFamily: {
-      primary: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      secondary: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      mono: "'Fira Code', 'Roboto Mono', Menlo, Monaco, Consolas, monospace",
+      // Updated to match GitHub's font family
+      primary: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif",
+      secondary: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif",
+      mono: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
     },
     fontSize: {
       xs: '0.75rem',   // 12px
@@ -63,18 +64,18 @@ const baseTheme = {
   },
   borderRadius: {
     xs: '2px',
-    sm: '4px',
+    sm: '6px',       // Updated to match GitHub's border radius
     md: '8px',
     lg: '12px',
     xl: '16px',
     round: '50%',
   },
   shadows: {
-    xs: '0 1px 2px rgba(0, 0, 0, 0.05)',
-    sm: '0 1px 3px rgba(0, 0, 0, 0.1)',
-    md: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    lg: '0 10px 15px rgba(0, 0, 0, 0.1)',
-    xl: '0 20px 25px rgba(0, 0, 0, 0.1)',
+    xs: '0 1px 2px rgba(31, 35, 40, 0.15)',    // Updated to match GitHub's shadow styles
+    sm: '0 1px 3px rgba(31, 35, 40, 0.12)',
+    md: '0 3px 6px rgba(31, 35, 40, 0.15)',
+    lg: '0 8px 24px rgba(31, 35, 40, 0.12)',
+    xl: '0 12px 28px rgba(31, 35, 40, 0.12)',
   },
   zIndex: {
     dropdown: 1000,
@@ -86,73 +87,87 @@ const baseTheme = {
   },
 };
 
-// Accent color palette options
+// Accent color palette options (aggiornati con i colori GitHub per il 2025)
 const accentColors = {
-  blue: '#1677ff',
-  purple: '#722ED1',
-  pink: '#EB2F96',
-  red: '#F5222D',
-  orange: '#FA8C16',
-  green: '#52C41A',
-  teal: '#13C2C2',
+  blue: '#0969da',    // GitHub primary blue
+  purple: '#8250df',  // GitHub purple
+  pink: '#bf3989',    // GitHub pink
+  red: '#cf222e',     // GitHub red
+  orange: '#bc4c00',  // GitHub orange
+  green: '#2da44e',   // GitHub green
+  teal: '#1b7c83',    // GitHub teal
 };
 
-// Light theme (cream-based soft tones)
+// Light theme (GitHub-inspired soft tones per 2025 standards)
 export const lightTheme: Theme = {
   mode: 'light',
   colors: {
-    primary: '#1677ff',
-    secondary: '#6c757d',
-    accent: accentColors.blue,
-    background: '#F8F6F1', // Cream-based light background
-    backgroundHover: '#F0EEE9', // Slightly darker hover version
-    surface: '#FFFDF7', // Soft panna white
-    error: '#F5222D',
-    warning: '#FAAD14',
-    success: '#52C41A',
-    info: '#1677ff',
+    primary: accentColors.blue,
+    secondary: '#57606a',
+    surface: '#fffdf7', // Tono panna/crema per light mode come richiesto
+    backgroundHover: '#f0ece0', // Hover in toni panna per light mode
+    error: accentColors.red,
+    warning: accentColors.orange,
+    success: accentColors.green,
+    info: accentColors.blue,
+    
+    // Oggetti di tipo nidificato per rispettare l'interfaccia
+    background: {
+      primary: '#fcf9f2', // Tono panna/crema base per light mode
+      secondary: '#f8f6f1', // Tono panna/crema più scuro per light mode
+      highlight: '#f5f2e8', // Tono panna/crema per elementi in evidenza
+    },
+    
+    accent: {
+      primary: accentColors.blue,
+      secondary: '#0550ae', // GitHub secondary blue
+    },
     
     gradients: {
-      start: '#1677ff',
-      end: '#4096ff',
+      start: accentColors.blue,
+      end: '#1f78d1', // Slightly lighter version of GitHub blue
     },
     
     text: {
-      primary: '#262626',
-      secondary: '#595959',
-      disabled: '#BFBFBF',
-      hint: '#8C8C8C',
-      link: '#1677ff',
+      primary: '#24292f', // GitHub text
+      secondary: '#57606a', // GitHub secondary text
+      disabled: '#a1a1aa',
+      hint: '#6e7781', // GitHub tertiary text
+      link: accentColors.blue,
+      muted: '#8b949e', // GitHub muted text
     },
     
     border: {
-      default: '#E8E8E8',
-      input: '#D9D9D9',
-      divider: '#F0F0F0',
+      default: '#d0d7de', // GitHub border
+      input: '#d8dee4', // GitHub input border
+      divider: '#d8dee4', // GitHub divider
+      primary: accentColors.blue, // Primary border color
+      light: '#eaeef2', // Light border
+      muted: '#eaeef2', // Muted border per coerenza
     },
     
     components: {
-      navbar: '#FFFFFF',
-      sidebar: '#F8F6F1',
-      card: '#FFFFFF',
+      navbar: '#fcf9f2',
+      sidebar: '#f8f6f1',
+      card: '#fffdf7',
       input: {
-        background: '#FFFFFF',
-        placeholder: '#BFBFBF',
+        background: '#fcf9f2',
+        placeholder: '#6e7781',
       },
       button: {
         primary: {
-          background: '#1677ff',
-          text: '#FFFFFF',
-          hover: '#4096ff',
+          background: accentColors.blue,
+          text: '#ffffff',
+          hover: '#0550ae',
         },
         secondary: {
-          background: '#F0F0F0',
-          text: '#262626',
-          hover: '#D9D9D9',
+          background: '#f6f8fa',
+          text: '#24292f',
+          hover: '#eaeef2',
         },
         ghost: {
           background: 'transparent',
-          text: '#262626',
+          text: '#24292f',
           hover: 'rgba(0, 0, 0, 0.05)',
         },
       },
@@ -161,62 +176,76 @@ export const lightTheme: Theme = {
   ...baseTheme,
 };
 
-// Dark theme (very dark tones)
+// Dark theme (GitHub Dark inspired per 2025 standards)
 export const darkTheme: Theme = {
   mode: 'dark',
   colors: {
-    primary: '#1677ff',
-    secondary: '#6c757d',
-    accent: accentColors.blue,
-    background: '#121212', // Very dark background
-    backgroundHover: '#1F1F1F', // Slightly lighter hover version
-    surface: '#1E1E1E', // Dark surface
-    error: '#FF4D4F',
-    warning: '#FAAD14',
-    success: '#52C41A',
-    info: '#1677ff',
+    primary: '#2f81f7', // GitHub dark mode blue
+    secondary: '#768390',
+    surface: '#21262d', // GitHub dark mode surface - migliorato per maggiore leggibilità
+    backgroundHover: '#2d333b', // GitHub dark hover
+    error: '#fa4549', // GitHub dark red
+    warning: '#cc6b2c', // GitHub dark warning
+    success: '#57ab5a', // GitHub dark success
+    info: '#2f81f7', // GitHub dark mode blue
+    
+    // Oggetti nidificati per rispettare l'interfaccia
+    background: {
+      primary: '#0d1117', // GitHub dark background
+      secondary: '#161b22', // GitHub dark secondary background
+      highlight: '#2d333b', // GitHub dark highlight - aumentato contrasto
+    },
+    
+    accent: {
+      primary: '#2f81f7', // GitHub dark blue
+      secondary: '#409eff', // Lighter blue for dark mode
+    },
     
     gradients: {
-      start: '#1677ff',
-      end: '#4096ff',
+      start: '#2f81f7',
+      end: '#58a6ff',
     },
     
     text: {
-      primary: '#FFFFFF',
-      secondary: '#D9D9D9',
-      disabled: '#595959',
-      hint: '#8C8C8C',
-      link: '#4096ff',
+      primary: '#e6edf3', // GitHub dark text
+      secondary: '#adbac7', // GitHub dark secondary text
+      disabled: '#545d68',
+      hint: '#768390', // GitHub dark tertiary text
+      link: '#58a6ff', // GitHub dark link
+      muted: '#636e7b', // GitHub dark muted text
     },
     
     border: {
-      default: '#303030',
-      input: '#434343',
-      divider: '#303030',
+      default: '#30363d', // GitHub dark border
+      input: '#30363d', // GitHub dark input border
+      divider: '#21262d', // GitHub dark divider
+      primary: '#388bfd', // Primary border color for dark
+      light: '#21262d', // Light border for dark theme
+      muted: '#21262d', // Aggiunto border muted per coerenza
     },
     
     components: {
-      navbar: '#141414',
-      sidebar: '#141414',
-      card: '#1F1F1F',
+      navbar: '#21262d',
+      sidebar: '#161b22',
+      card: '#22272e',
       input: {
-        background: '#141414',
-        placeholder: '#595959',
+        background: '#21262d',
+        placeholder: '#768390',
       },
       button: {
         primary: {
-          background: '#1677ff',
-          text: '#FFFFFF',
-          hover: '#4096ff',
+          background: '#238636', // GitHub green button in dark mode
+          text: '#ffffff',
+          hover: '#2ea043',
         },
         secondary: {
-          background: '#141414',
-          text: '#FFFFFF',
-          hover: '#303030',
+          background: '#21262d', // GitHub dark secondary button
+          text: '#c9d1d9',
+          hover: '#30363d',
         },
         ghost: {
           background: 'transparent',
-          text: '#FFFFFF',
+          text: '#c9d1d9',
           hover: 'rgba(255, 255, 255, 0.08)',
         },
       },
@@ -227,22 +256,58 @@ export const darkTheme: Theme = {
 
 // Function to generate a theme with a specific accent color
 export const generateThemeWithAccent = (theme: Theme, accentColor: AccentColor): Theme => {
+  const accentValue = accentColors[accentColor];
+  const secondaryAccent = theme.mode === 'light' 
+    ? lightenColor(accentValue, -10) 
+    : lightenColor(accentValue, 10);
+  const lightAccent = lightenColor(accentValue, 30);
+  
   const newColors: Colors = {
     ...theme.colors,
-    accent: accentColors[accentColor],
-    primary: accentColors[accentColor],
+    // Colore principale aggiornato
+    primary: accentValue,
+    
+    // Accenti aggiornati
+    accent: {
+      primary: accentValue,
+      secondary: secondaryAccent,
+    },
+    
+    // Gradients aggiornati
+    gradients: {
+      start: accentValue,
+      end: secondaryAccent,
+    },
+    
+    // Colori del testo aggiornati
     text: {
       ...theme.colors.text,
-      link: theme.mode === 'light' ? accentColors[accentColor] : lightenColor(accentColors[accentColor], 20),
+      link: theme.mode === 'light' ? accentValue : lightenColor(accentValue, 20),
     },
+    
+    // Colori dei bordi aggiornati
+    border: {
+      ...theme.colors.border,
+      primary: accentValue,
+    },
+    
+    // Componenti UI aggiornati
     components: {
       ...theme.colors.components,
       button: {
         ...theme.colors.components.button,
         primary: {
           ...theme.colors.components.button.primary,
-          background: accentColors[accentColor],
-          hover: lightenColor(accentColors[accentColor], theme.mode === 'light' ? 10 : -10),
+          background: accentValue,
+          hover: theme.mode === 'light' ? secondaryAccent : lightenColor(accentValue, -10),
+        },
+        secondary: {
+          ...theme.colors.components.button.secondary,
+          text: theme.mode === 'light' ? accentValue : lightenColor(accentValue, 10),
+        },
+        ghost: {
+          ...theme.colors.components.button.ghost,
+          text: theme.mode === 'light' ? accentValue : lightenColor(accentValue, 10),
         },
       },
     },

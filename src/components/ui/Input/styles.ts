@@ -13,6 +13,11 @@ export const StyledLabel = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.text.secondary};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
 `;
 
 // Get size styles for the input container
@@ -41,33 +46,65 @@ export const StyledInputContainer = styled.div<{
 }>`
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.components.input.background};
+  background-color: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? '#f8f6f1' /* Tono panna più chiaro per light mode */
+      : theme.colors.background.secondary};
   border: 1px solid ${({ theme, $hasError }) => 
-    $hasError ? theme.colors.error : theme.colors.border.input};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+    $hasError ? theme.colors.error : theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.borderRadius.sm}; /* In linea con lo stile GitHub */
   width: 100%;
-  transition: all 0.2s ${({ theme }) => theme.animation.easing.easeInOut};
+  transition: all 0.2s ease;
+  box-shadow: ${({ theme }) => 
+    theme.mode === 'light' 
+      ? 'inset 0 1px 2px rgba(27, 31, 35, 0.05)' /* Ombra interna GitHub-style */
+      : 'none'};
   
   ${({ $size }) => getInputSizeStyles($size)}
   
+  &:hover:not(:focus-within):not([disabled]) {
+    border-color: ${({ theme, $hasError }) => 
+      $hasError ? theme.colors.error : theme.colors.border.primary};
+    background-color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? '#fffdf7' /* Tono panna/crema più chiaro all'hover */
+        : theme.colors.background.primary};
+  }
+  
   &:focus-within {
     border-color: ${({ theme, $hasError }) => 
-      $hasError ? theme.colors.error : theme.colors.primary};
+      $hasError ? theme.colors.error : theme.colors.accent.primary};
     box-shadow: 0 0 0 2px ${({ theme, $hasError }) => 
-      $hasError ? `${theme.colors.error}33` : `${theme.colors.primary}33`};
+      $hasError ? `${theme.colors.error}33` : `${theme.colors.accent.primary}30`};
+    background-color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? '#ffffff' /* Bianco quando in focus */
+        : theme.colors.background.secondary};
   }
   
   ${({ $disabled, theme }) =>
     $disabled &&
     css`
-      background-color: ${theme.mode === 'light' ? '#f5f5f5' : '#2d2d2d'};
-      border-color: ${theme.colors.border.input};
+      background-color: ${theme.mode === 'light' ? '#f2f2f2' : '#22272e'};
+      border-color: ${theme.colors.border.default};
       cursor: not-allowed;
-      opacity: 0.7;
+      opacity: 0.6;
       
       &:focus-within {
-        border-color: ${theme.colors.border.input};
+        border-color: ${theme.colors.border.default};
         box-shadow: none;
+      }
+      
+      /* Stile Ant Design per elementi disabilitati */
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: ${theme.mode === 'light' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.1)'};
+        pointer-events: none;
       }
     `}
 `;
